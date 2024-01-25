@@ -60,7 +60,7 @@ def main():
     try:
         while True:
             data = stream.read(CHUNK, exception_on_overflow=False)
-            #data = apply_filter(data, (b, a))
+            data = apply_filter(data, (b, a))
             #data = distort_audio(data)
             stream.write(data, CHUNK)
     except KeyboardInterrupt:
