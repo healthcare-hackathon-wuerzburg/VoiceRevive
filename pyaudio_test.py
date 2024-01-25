@@ -2,6 +2,7 @@ import pyaudio
 import numpy as np
 import scipy.signal
 
+
 # Audio configuration
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1

@@ -1,37 +1,33 @@
-# PROJECTNAME
+# Mockingbird
 
 ## Problem Statement
-
+<TODO>
 Describe the main problem here.
 
 ## Idea
-
+<TODO>
 Describe how you are going to solve this problem
 
 ## Getting Started
-
+<TODO>
 This section describes the requirements of the project and how to get started.
 
 ### Requirements
+The project is implemented using Python 3.11 and was tested on Mac.
 
-List all requirements here
+First install the required system packages. For max this can be done using the
+following commands:
+```
+brew install portaudio
+```
 
-- Python
-- x
-- y
+Afterward, the python packages can be installed using `pip install -r requirement.txt`.
 
 ### Installation
-
-Describe, how to install the project, like:
-
-1) clone the repository via `git clone ...`
-2) install dependencies via `npm install`
-3) start the dev server via `npm run dev`
-4) suddenly a miracle appears
-5) open your webbrowser on http://localhost:3000
+Besides the installation of the requirements no further installation is needed.
 
 ## How to use the Project 
-
+<TODO>
 Describe, how someone can work with the developed application / library. How can I access basic functionality, ...
 
 ## Deployment
