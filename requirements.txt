@@ -1,0 +1,4 @@
+# python 3.11
+pyaudip == 0.2.14
+numpy   == 1.26.3
+scipy   == 1.12.0
