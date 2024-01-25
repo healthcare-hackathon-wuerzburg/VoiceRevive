@@ -8,13 +8,6 @@ CHANNELS = 1
 RATE = 44100
 CHUNK = 1024
 
-# Low-pass filter configuration
-cutoff_frequency = 3000  # 3000 Hz cutoff frequency
-nyquist_frequency = RATE / 2  # Nyquist frequency is half the sampling rate
-order = 6  # Order of the filter
-
-# Design a Butterworth low-pass filter
-b, a = scipy.signal.butter(order, cutoff_frequency / nyquist_frequency, btype='low', analog=False)
 
 def distort_audio(data, gain=2):
     """
@@ -35,6 +28,7 @@ def distort_audio(data, gain=2):
     # Convert back to byte data
     return audio_data.tobytes()
 
+
 def apply_filter(data, filter_coefficients):
     """
     Apply a filter to the audio signal.
@@ -43,26 +37,39 @@ def apply_filter(data, filter_coefficients):
     filtered_data = scipy.signal.lfilter(filter_coefficients[0], filter_coefficients[1], audio_data)
     return filtered_data.astype(np.float32).tobytes()
 
-# Initialize PyAudio
-p = pyaudio.PyAudio()
 
-# Open stream
-stream = p.open(format=FORMAT, channels=CHANNELS,
-                rate=RATE, input=True,
-                output=True, frames_per_buffer=CHUNK)
+def main():
+    # Low-pass filter configuration
+    cutoff_frequency = 3000  # 3000 Hz cutoff frequency
+    nyquist_frequency = RATE / 2  # Nyquist frequency is half the sampling rate
+    order = 6  # Order of the filter
 
-print("Streaming distorted audio. Press Ctrl+C to stop.")
+    # Design a Butterworth low-pass filter
+    b, a = scipy.signal.butter(order, cutoff_frequency / nyquist_frequency, btype='low', analog=False)
 
-try:
-    while True:
-        data = stream.read(CHUNK, exception_on_overflow=False)
-        data = apply_filter(data, (b, a))
-        data = distort_audio(data)
-        stream.write(data, CHUNK)
-except KeyboardInterrupt:
-    print("\nStopping audio stream.")
+    # Initialize PyAudio
+    p = pyaudio.PyAudio()
 
-# Close the stream
-stream.stop_stream()
-stream.close()
-p.terminate()
+    # Open stream
+    stream = p.open(format=FORMAT, channels=CHANNELS,
+                    rate=RATE, input=True,
+                    output=True, frames_per_buffer=CHUNK)
+
+    print("Streaming audio. Press Ctrl+C to stop.")
+    try:
+        while True:
+            data = stream.read(CHUNK, exception_on_overflow=False)
+            #data = apply_filter(data, (b, a))
+            #data = distort_audio(data)
+            stream.write(data, CHUNK)
+    except KeyboardInterrupt:
+        print("\nStopping audio stream.")
+
+    # Close the stream
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+
+
+if __name__ == "__main__":
+    main()
