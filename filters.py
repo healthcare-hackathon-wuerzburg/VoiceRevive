@@ -1,55 +1,46 @@
-import pyaudio
+# third-party modules
+from pyaudio import paFloat32
 import numpy as np
 import pyrubberband as pyrb
 from scipy.signal import lfilter, butter
 
 
 # Audio configuration
-FORMAT = pyaudio.paFloat32
+FORMAT = paFloat32
 CHANNELS = 1
 RATE = 44100
 CHUNK = 1024
 
 
-def apply_filter(data):
+def apply_pitch_shift_filter(
+        data: bytes,
+        semitones: int
+    ) -> bytes:
     """
-    Apply a filter to the audio signal. // should be equal to equalizer and unnecessary
+    Shifts the pitch of the audio data. 
+
+    `data: bytes` Audio data to filter.
+    `semitones: int` Number of semitones to shift the pitch. Use 0.X to pitch down.
     """
-    # Low-pass filter configuration
-    cutoff_frequency = 2000  # 3000 Hz cutoff frequency
-    nyquist_frequency = RATE / 2  # Nyquist frequency is half the sampling rate
-    order = 6  # Order of the filter
-
-    # Design a Butterworth low-pass filter
-    b, a = butter(order, cutoff_frequency / nyquist_frequency, btype='low', analog=False)
-
-    audio_data = np.frombuffer(data, dtype=np.float32)
-    filtered_data = lfilter(a, b, audio_data)
-    return filtered_data.astype(np.float32).tobytes()
+    return pyrb.pitch_shift(data, RATE, semitones)
 
 
-def pitch_shift(data, semitones):
-    """
-    Shifts the pitch of the audio data.
-    """
-    audio_data = np.frombuffer(data, dtype=np.float32)
-    shifted_data = pyrb.pitch_shift(audio_data, RATE, semitones)
-    return shifted_data.astype(np.float32).tobytes()
-
-
-def apply_eq_filter(data, low_gain, mid_gain, high_gain, fs):
+def apply_eq_filter(
+        data: np.ndarray,
+        low_gain: float = 1.5,
+        mid_gain: float = 1.0,
+        high_gain: float = 1.2,
+        fs: int = 44100
+    ) -> bytes:
     """
     Apply a three-band equalization filter to the audio data.
 
-    :param data: The input audio data (numpy array).
-    :param low_gain: Gain for low frequencies.
-    :param mid_gain: Gain for mid frequencies.
-    :param high_gain: Gain for high frequencies.
-    :param fs: Sampling frequency.
-    :return: Equalized audio data.
+    `data: bytes` Audio data to filter.
+    `low_gain: float` Gain for the low frequencies.
+    `mid_gain: float` Gain for the mid frequencies.
+    `high_gain: float` Gain for the high frequencies.
+    `fs: int` Sampling rate.
     """
-    data = np.frombuffer(data, dtype=np.float32)
-
     # Low-pass filter for low frequencies
     b, a = butter(2, 250 / (0.5 * fs), btype='low')
     low_freqs = lfilter(b, a, data)
@@ -63,6 +54,4 @@ def apply_eq_filter(data, low_gain, mid_gain, high_gain, fs):
     high_freqs = lfilter(b, a, data)
 
     # Apply gains
-    equalized_signal = (low_freqs * low_gain) + (mid_freqs * mid_gain) + (high_freqs * high_gain)
-
-    return equalized_signal
+    return (low_freqs * low_gain) + (mid_freqs * mid_gain) + (high_freqs * high_gain)
