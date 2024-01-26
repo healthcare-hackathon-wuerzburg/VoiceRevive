@@ -19,6 +19,8 @@ First install the required system packages. For max this can be done using the
 following commands:
 ```
 brew install portaudio
+brew install libsndfile
+brew install rubberband
 ```
 
 Afterward, the python packages can be installed using `pip install -r requirement.txt`.
