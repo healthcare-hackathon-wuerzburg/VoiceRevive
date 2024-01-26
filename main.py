@@ -51,10 +51,10 @@ def audio_processing(
         data = audio_queue.get()
         # transform audio bytes to numpy array
         data = np.frombuffer(data, dtype=np.float32)
-        
+
         # add filters here
         data = apply_eq_filter(data, 2)
-        
+
         # transform numpy array back to audio bytes
         data = data.astype(np.float32).tobytes()
         processed_queue.put(data)

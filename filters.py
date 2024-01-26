@@ -1,5 +1,4 @@
 # third-party modules
-from pyaudio import paFloat32
 import numpy as np
 import pyrubberband as pyrb
 from scipy.signal import lfilter, butter
