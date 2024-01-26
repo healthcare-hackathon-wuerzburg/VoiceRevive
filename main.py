@@ -19,10 +19,10 @@ CHUNK = 1024
 
 
 def audio_input(
-        stream: Stream,
-        audio_queue: Queue,
-        stop_event: Event
-    ) -> None:
+    stream: Stream,
+    audio_queue: Queue,
+    stop_event: Event
+) -> None:
     """
     Audio input thread. Responsible for reading the audio data from the microphone.
 
@@ -36,10 +36,10 @@ def audio_input(
 
 
 def audio_processing(
-        audio_queue: Queue,
-        processed_queue: Queue,
-        stop_event: Event
-    ) -> None:
+    audio_queue: Queue,
+    processed_queue: Queue,
+    stop_event: Event
+) -> None:
     """
     Audio processing thread. Responsible for processing the audio data.
 
@@ -61,10 +61,10 @@ def audio_processing(
 
 
 def audio_output(
-        stream: Stream,
-        processed_queue: Queue,
-        stop_event: Event
-    ) -> None:
+    stream: Stream,
+    processed_queue: Queue,
+    stop_event: Event
+) -> None:
     """
     Audio output thread. Responsible for outputting the processed audio data.
 
@@ -90,7 +90,7 @@ def main() -> None:
     # queues for sharing data between threads
     audio_queue = Queue()
     processed_queue = Queue()
-    
+
     stop_event = Event()
 
     # Create and start threads
