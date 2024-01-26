@@ -3,7 +3,7 @@ from threading import Thread, Event
 from queue import Queue
 import time
 
-from filters import apply_filter, pitch_shift, apply_eq_filter
+from filters import pitch_shift
 
 
 # Audio configuration
@@ -27,8 +27,8 @@ def audio_input(stream, audio_queue, stop_event):
 def audio_processing(audio_queue, processed_queue, stop_event):
     while not stop_event.is_set():
         data = audio_queue.get()
-        # Process data (apply filters, pitch shift, etc.)
-        #data = pitch_shift(data, 2)
+        # Simple pith shift to increase the pitch of the voice
+        data = pitch_shift(data, 2)
         processed_queue.put(data)
 
 
