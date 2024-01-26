@@ -1,4 +1,4 @@
-# Lyrebird - Towards a Real-Time Voice Modulator
+# VoiceRevive - Towards a Real-Time Voice Modulator
 
 ## Problem Statement
 The aim of this project is to develop a real-time voice modulator designed to enhance communication for patients who have undergone laryngectomy (removal of the larynx/throat) due to laryngeal cancer.
