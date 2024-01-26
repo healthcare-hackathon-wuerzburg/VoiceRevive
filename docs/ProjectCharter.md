@@ -41,8 +41,13 @@ During the initial Healthcare Hackathon a multitude of different frameworks were
     - https://github.com/sa-if/Audio-Denoiser/blob/main/main.py
         - Only code of the script itself could be used for some reference
 - ML-Models
+    - https://github.com/anicolson/DeepXi
+        - Model provides significant denoise
+        - only works using a shell script, inference setup quite hideous
     - https://github.com/NVIDIA/CleanUNet
-    - https://github.com/santi-pdp/segan_pytorch 
+        - not tested yet
+    - https://github.com/Sindhu-Hegde/pseudo-visual-speech-denoising
+        - not tested yet
 
 ### Dead Projects without much Potential for the Use Case
 - https://github.com/juancarlospaco/pyvoicechanger
@@ -62,3 +67,7 @@ During the initial Healthcare Hackathon a multitude of different frameworks were
     - TTS
     - Up-to-date
     - ~3-4 seconds for a simple sentence
+- https://github.com/santi-pdp/segan_pytorch 
+    - dependencies outdated
+- https://github.com/f90/Wave-U-Net-Pytorch
+    - dependencies to old
